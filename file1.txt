@@ -1,5 +1,5 @@
 SHOW DATABASES;
-DROP DATABASE ccretu2db;
+DROP DATABASE IF EXISTS ccretu2db;
 CREATE DATABASE ccretu2db;
 USE ccretu2db;
 GRANT USAGE ON *.* TO 'ta'@'localhost';
