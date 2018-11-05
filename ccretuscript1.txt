@@ -9,7 +9,7 @@ GRANT ALL PRIVILEGES ON ccretu2db.* TO 'ta'@'localhost';
 FLUSH PRIVILEGES;
 SHOW TABLES;
 CREATE TABLE Agent(agentID VARCHAR(2) NOT NULL PRIMARY KEY, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), commission INT);
-CREATE TABLE Customer(customerID VARCHAR(2) NOT NULL PRIMARY KEY, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), phone INT, agentID VARCHAR(2) NOT NULL, FOREIGN KEY (agentID) REFERENCES Agent(agentID));
+CREATE TABLE Customer(customerID VARCHAR(2) NOT NULL PRIMARY KEY, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), phone INT, agentID VARCHAR(2), FOREIGN KEY (agentID) REFERENCES Agent(agentID));
 CREATE TABLE Product(productID VARCHAR(2) NOT NULL PRIMARY KEY, description VARCHAR(20), cost INT, quantity INT);
 CREATE TABLE Purchased(quantityBought INT NOT NULL, customerID VARCHAR(2) NOT NULL, productID VARCHAR(2) NOT NULL, FOREIGN KEY (customerID) REFERENCES Customer(customerID), FOREIGN KEY (productID) REFERENCES Product(productID));
 SHOW TABLES;
