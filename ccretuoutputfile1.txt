@@ -1,0 +1,68 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW DATABASES
+--------------
+
+Database
+information_schema
+ccretu2db
+mycompany
+mysql
+performance_schema
+--------------
+DROP DATABASE IF EXISTS ccretu2db
+--------------
+
+--------------
+CREATE DATABASE ccretu2db
+--------------
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+--------------
+GRANT ALL PRIVILEGES ON ccretu2db.* TO 'ta'@'localhost'
+--------------
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+--------------
+CREATE TABLE Agent(agentID VARCHAR(2) NOT NULL PRIMARY KEY, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), commission INT)
+--------------
+
+--------------
+CREATE TABLE Customer(customerID VARCHAR(2) NOT NULL PRIMARY KEY, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), phone VARCHAR(8), agentID VARCHAR(2), FOREIGN KEY (agentID) REFERENCES Agent(agentID))
+--------------
+
+--------------
+CREATE TABLE Product(productID VARCHAR(2) NOT NULL PRIMARY KEY, description VARCHAR(20), cost FLOAT, quantity INT)
+--------------
+
+--------------
+CREATE TABLE Purchased(quantityBought INT NOT NULL, customerID VARCHAR(2) NOT NULL, productID VARCHAR(2) NOT NULL, FOREIGN KEY (customerID) REFERENCES Customer(customerID), FOREIGN KEY (productID) REFERENCES Product(productID))
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+Tables_in_ccretu2db
+Agent
+Customer
+Product
+Purchased

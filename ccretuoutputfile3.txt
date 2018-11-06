@@ -1,0 +1,136 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT description FROM Product
+--------------
+
+description
+Bike
+Socks
+Shrek Mask
+Elbow pads
+Knee Pads
+Roller Blades
+Helmet
+--------------
+SELECT DISTINCT city FROM Customer
+--------------
+
+city
+Boston
+Springfield
+Kypto
+Providence
+--------------
+SELECT * FROM Agent ORDER BY Agent.city
+--------------
+
+agentID	firstname	lastname	city	commission
+33	David	Letterman	Bedrock	100
+11	Regis	Philbin	Boston	33
+5	Claudiu	Grant	London	30
+22	Courtney	Cox	New York	25
+12	Rosie	Cox	Ottawa	50
+66	Rosie	ODonnell	Ottawa	100
+99	Hugh	Grant	Springfield	16
+--------------
+SELECT firstname, lastname FROM Customer WHERE Customer.city = "Springfield"
+--------------
+
+firstname	lastname
+Monty	Burns
+Homer	Simpson
+Sideshow	Bob
+--------------
+SELECT lastname FROM Customer WHERE Customer.agentID IN (SELECT agentID FROM Agent WHERE firstname = "Regis")
+--------------
+
+lastname
+Rubble
+Flintstone
+--------------
+SELECT description FROM Product WHERE Product.description LIKE '%pad%'
+--------------
+
+description
+Elbow pads
+Knee Pads
+--------------
+SELECT Customer.lastname , Product.description ,  Purchased.quantityBought FROM Customer JOIN Purchased ON Purchased.customerID = Customer.customerID JOIN Product ON Purchased.productID = Product.productID
+--------------
+
+lastname	description	quantityBought
+Griffens	Elbow pads	19
+Flintstone	Elbow pads	2
+Flintstone	Knee Pads	2
+Simpson	Helmet	20
+Simpson	Socks	14
+Simpson	Elbow pads	10
+Bob	Helmet	5
+Bob	Socks	5
+Bob	Knee Pads	5
+Bob	Elbow pads	5
+--------------
+SELECT SUM(quantityBought) AS "Homer's Total Purchases" FROM Purchased WHERE Purchased.customerID = (SELECT Customer.customerID FROM Customer WHERE Customer.firstname = "Homer")
+--------------
+
+Homer's Total Purchases
+44
+--------------
+SELECT Customer.firstname, Customer.lastname, SUM(Purchased.quantityBought) AS "Total Purchases" FROM Customer JOIN Purchased ON Customer.customerID = Purchased.customerID GROUP BY firstname
+--------------
+
+firstname	lastname	Total Purchases
+Fred	Flintstone	4
+Homer	Simpson	44
+Peter	Griffens	19
+Sideshow	Bob	20
+--------------
+SELECT Product.description, Product.quantity FROM Product WHERE NOT EXISTS (SELECT Purchased.productID FROM Purchased WHERE Product.productID = Purchased.productID)
+--------------
+
+description	quantity
+Bike	200
+Shrek Mask	10
+Roller Blades	89
+--------------
+SELECT Product.description, Product.quantity FROM Product WHERE Product.description NOT IN ( SELECT Product.description FROM Product LEFT JOIN Purchased ON Purchased.productID = Product.productID INNER JOIN Customer ON Customer.customerID = Purchased.customerID WHERE Customer.firstname = "Fred" AND Customer.lastname = "Flintstone")
+--------------
+
+description	quantity
+Bike	200
+Socks	100
+Shrek Mask	10
+Roller Blades	89
+Helmet	30
+--------------
+SELECT Agent.firstname AS "Agent First Name", Agent.lastname AS "Agent Last Name", Customer.firstname AS "Customer First Name", Customer.lastname AS "Customer.lastname" FROM Customer JOIN Agent ON Customer.agentID = Agent.agentID
+--------------
+
+Agent First Name	Agent Last Name	Customer First Name	Customer.lastname
+Regis	Philbin	Barney	Rubble
+Hugh	Grant	Monty	Burns
+David	Letterman	Wonder	Woman
+Hugh	Grant	Peter	Griffens
+Regis	Philbin	Fred	Flintstone
+Hugh	Grant	Homer	Simpson
+Rosie	ODonnell	Sideshow	Bob
+--------------
+SELECT SUM(quantityBought) AS "Total Knee Pad Purchases" FROM Purchased WHERE Purchased.productID = (SELECT Product.productID FROM Product WHERE Product.description = "Knee Pads")
+--------------
+
+Total Knee Pad Purchases
+7
+--------------
+SELECT Product.description AS "3 or more purchases" FROM Product INNER JOIN Purchased ON Product.productID = Purchased.productID GROUP BY description HAVING COUNT(Purchased.productID) > 2
+--------------
+
+3 or more purchases
+Elbow pads
+--------------
+SELECT Agent.firstname, Agent.lastname FROM Agent JOIN Customer ON Agent.agentID = Customer.agentID JOIN Purchased ON Purchased.customerID = Customer.customerID GROUP BY Agent.firstname, Agent.lastname
+--------------
+
+firstname	lastname
+Hugh	Grant
+Regis	Philbin
+Rosie	ODonnell
