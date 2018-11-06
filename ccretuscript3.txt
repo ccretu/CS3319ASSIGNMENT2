@@ -1,3 +1,4 @@
+USE ccretu2db;
 -- Query 1
 SELECT description FROM Product;
 -- Query 2
