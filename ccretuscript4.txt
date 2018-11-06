@@ -1,0 +1,10 @@
+SELECT * FROM Product;
+SELECT * FROM Agent;
+SELECT * FROM Customer;
+SELECT * FROM Purchased;
+CREATE VIEW ProductsBought AS SELECT Customer.firstname, Customer.lastname, Product.description, Purchased.quantityBought, Purchased.quantityBought * Product.cost AS "Total cost of Product bought" FROM Customer INNER JOIN Purchased ON Customer.customerID = Purchased.customerID INNER JOIN Product ON Product.productID = Purchased.productID ORDER BY Customer.lastname;
+SELECT * FROM ProductsBought;
+SELECT * FROM ProductsBought WHERE `Total cost of Product bought` > 100;
+DELETE FROM Product WHERE productID = "42";
+DELETE FROM Agent WHERE city = "Springfield"; 
+-- This is not deleted because agents are used as a foreign key in other tables

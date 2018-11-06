@@ -1,0 +1,30 @@
+-- Query 1
+SELECT description FROM Product;
+-- Query 2
+SELECT DISTINCT city FROM Customer;
+-- Query 3
+SELECT * FROM Agent ORDER BY Agent.city;
+-- Query 4
+SELECT firstname, lastname FROM Customer WHERE Customer.city = "Springfield";
+-- Query 5
+SELECT lastname FROM Customer WHERE Customer.agentID IN (SELECT agentID FROM Agent WHERE firstname = "Regis");
+-- Query 6
+SELECT description FROM Product WHERE Product.description LIKE '%pad%';
+-- Query 7
+SELECT Customer.lastname , Product.description ,  Purchased.quantityBought FROM Customer JOIN Purchased ON Purchased.customerID = Customer.customerID JOIN Product ON Purchased.productID = Product.productID;
+-- Query 8
+SELECT SUM(quantityBought) AS "Homer's Total Purchases" FROM Purchased WHERE Purchased.customerID = (SELECT Customer.customerID FROM Customer WHERE Customer.firstname = "Homer");
+-- Query 9
+SELECT Customer.firstname, Customer.lastname, SUM(Purchased.quantityBought) AS "Total Purchases" FROM Customer JOIN Purchased ON Customer.customerID = Purchased.customerID GROUP BY firstname;
+-- Query 10
+SELECT Product.description, Product.quantity FROM Product WHERE NOT EXISTS (SELECT Purchased.productID FROM Purchased WHERE Product.productID = Purchased.productID);
+-- Query 11
+SELECT Product.description, Product.quantity FROM Product WHERE Product.description NOT IN ( SELECT Product.description FROM Product LEFT JOIN Purchased ON Purchased.productID = Product.productID INNER JOIN Customer ON Customer.customerID = Purchased.customerID WHERE Customer.firstname = "Fred" AND Customer.lastname = "Flintstone");
+-- Query 12
+SELECT Agent.firstname AS "Agent First Name", Agent.lastname AS "Agent Last Name", Customer.firstname AS "Customer First Name", Customer.lastname AS "Customer.lastname" FROM Customer JOIN Agent ON Customer.agentID = Agent.agentID;
+-- Query 13
+SELECT SUM(quantityBought) AS "Total Knee Pad Purchases" FROM Purchased WHERE Purchased.productID = (SELECT Product.productID FROM Product WHERE Product.description = "Knee Pads");
+-- Query 14
+SELECT Product.description AS "3 or more purchases" FROM Product INNER JOIN Purchased ON Product.productID = Purchased.productID GROUP BY description HAVING COUNT(Purchased.productID) > 2;
+-- Query 15
+SELECT Agent.firstname, Agent.lastname FROM Agent JOIN Customer ON Agent.agentID = Customer.agentID JOIN Purchased ON Purchased.customerID = Customer.customerID GROUP BY Agent.firstname, Agent.lastname;
