@@ -7,5 +7,6 @@ CREATE VIEW ProductsBought AS SELECT Customer.firstname, Customer.lastname, Prod
 SELECT * FROM ProductsBought;
 SELECT * FROM ProductsBought WHERE `Total cost of Product bought` > 100;
 DELETE FROM Product WHERE productID = "42";
+SELECT * FROM Product;
 DELETE FROM Agent WHERE city = "Springfield"; 
 -- This is not deleted because agents are used as a foreign key in other tables
