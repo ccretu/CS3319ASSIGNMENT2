@@ -1,3 +1,4 @@
+USE ccretu2db;
 SELECT * FROM Product;
 SELECT * FROM Agent;
 SELECT * FROM Customer;
